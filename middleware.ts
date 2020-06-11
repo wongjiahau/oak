@@ -16,6 +16,18 @@ export interface Middleware<
  * such that user are forced to call `next()` to prevent unwanted errors.
  */
 export class Next {}
+
+/**
+ * This class is used for not invoking `next()` function in middleware.
+ * For example,
+ * 
+ * ```
+ * app.use((ctx) => {
+ *   // do something
+ *   return new NoNext()
+ * })
+ * ```
+ */
 export class NoNext extends Next {}
 
 /** Compose multiple middleware functions into a single middleware function. */
