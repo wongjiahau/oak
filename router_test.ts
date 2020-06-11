@@ -134,6 +134,31 @@ test({
 });
 
 test({
+  name: "not invoking next",
+  async fn() {
+    const { context, next } = setup("/foo", "GET");
+
+    const callStack: number[] = [];
+    const router = new Router();
+    router.get("/", (_context, next) => {
+      callStack.push(1);
+      return next();
+    });
+    router.get("/foo", async (_context, next) => {
+      callStack.push(2);
+      return new Next();
+    });
+    router.get("/foo", async (_context, next) => {
+      callStack.push(3);
+      return next();
+    });
+    const mw = router.routes();
+    await mw(context, next);
+    assertEquals(callStack, [2]);
+  },
+});
+
+test({
   name: "router match with next",
   async fn() {
     const { context, next } = setup("/foo", "GET");
