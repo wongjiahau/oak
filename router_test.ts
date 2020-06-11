@@ -12,7 +12,7 @@ import { Context } from "./context.ts";
 import { Status } from "./deps.ts";
 import { httpErrors } from "./httpError.ts";
 import { Router, RouterContext } from "./router.ts";
-import { Next } from "./middleware.ts";
+import { Next, NoNext } from "./middleware.ts";
 
 function createMockApp<
   S extends Record<string | number | symbol, any> = Record<string, any>,
@@ -146,7 +146,7 @@ test({
     });
     router.get("/foo", async (_context, next) => {
       callStack.push(2);
-      return new Next();
+      return new NoNext();
     });
     router.get("/foo", async (_context, next) => {
       callStack.push(3);

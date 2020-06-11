@@ -16,6 +16,7 @@ export interface Middleware<
  * such that user are forced to call `next()` to prevent unwanted errors.
  */
 export class Next {}
+export class NoNext extends Next {}
 
 /** Compose multiple middleware functions into a single middleware function. */
 export function compose<
